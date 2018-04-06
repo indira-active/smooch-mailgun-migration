@@ -1,7 +1,7 @@
 {
   "name": "smooch-jwt",
   "version": "1.0.0",
-  "description": "Adds JWT authentication for live chat on indiraactive.com.",
+  "description": "temporary mailgun integration",
   "main": "jwt.js",
   "dependencies": {
     "body-parser": "1.18.2",
@@ -24,7 +24,6 @@
     "snyk": "^1.70.2"
   },
   "scripts": {
-    "test": "KEY_ID=app_5a70141be964c6003fe08afc SECRET=hIraqmK_mDq53XembMweqa86 mocha jwt/test.js",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov && codecov -t $CODECOV_TOKEN",
     "scan": "snyk test",
     "start": "node server.js"
