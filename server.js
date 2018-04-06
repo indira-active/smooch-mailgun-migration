@@ -5,8 +5,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const http = require('http');
-const KEY_ID = process.env.KEY_ID;
-const SECRET = process.env.SECRET;
+// test keys are alternatives, only privacy secure keys are for main app account
+const KEY_ID = process.env.KEY_ID || 'app_5a93ae6b5ed8ba0022389197';
+const SECRET = process.env.SECRET || 'LtbsS1fo7ORUesnHUTvsJYZ7';
 const PORT = 8080;
 const smooch = new SmoochCore({
       keyId: KEY_ID,
