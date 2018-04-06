@@ -1,0 +1,53 @@
+# Not currently in-use. Application is deployed to a Heroku dyno.
+apiVersion: v1
+kind: Service
+metadata:
+  name: smooch-jwt
+  labels:
+    app: smooch-jwt
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    nodePort: 30043
+  selector:
+    app: smooch-jwt
+# spec:
+#   type: LoadBalancer
+#   ports:
+#   - port: 8080
+#   selector:
+#     app: smooch-jwt
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: smooch-jwt
+  labels:
+      app: smooch-jwt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smooch-jwt
+  template:
+    metadata:
+      labels:
+        app: smooch-jwt
+        tier: prod
+        repo: smooch-jwt
+        branch: master
+    spec:
+      containers:
+      - name: smooch-jwt
+        image: gcr.io/zip-zap-gateway/smooch-jwt:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        # readinessProbe:
+        #     httpGet:
+        #         path: /healthz
+        #         port: 8080
+        #     initialDelaySeconds: 10
+        #     periodSeconds: 5
+        #     timeoutSeconds: 5

@@ -1,0 +1,38 @@
+{
+  "name": "smooch-jwt",
+  "version": "1.0.0",
+  "description": "Adds JWT authentication for live chat on indiraactive.com.",
+  "main": "jwt.js",
+  "dependencies": {
+    "body-parser": "1.18.2",
+    "cookie-parser": "1.4.3",
+    "cors": "2.8.4",
+    "express": "^4.16.2",
+    "jsdoc": "^3.5.5",
+    "jsonwebtoken": "^8.2.0",
+    "morgan": "1.9.0"
+  },
+  "devDependencies": {
+    "assert": "1.4.1",
+    "codecov": "^3.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "5.0.3",
+    "njwt": "0.4.0",
+    "nodeunit": "^0.11.2",
+    "nyc": "^11.4.1",
+    "snyk": "^1.70.2"
+  },
+  "scripts": {
+    "test": "KEY_ID=app_5a70141be964c6003fe08afc SECRET=hIraqmK_mDq53XembMweqa86 mocha jwt/test.js",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov && codecov -t $CODECOV_TOKEN",
+    "scan": "snyk test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:indira-active/smooch-jwt.git"
+  },
+  "author": "Andrew Williams",
+  "license": "UNLICENSED",
+  "private": true
+}
