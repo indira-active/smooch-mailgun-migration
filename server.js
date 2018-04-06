@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const http = require('http');
-const smoochCore = require('smooch-core');
+const SmoochCore = require('smooch-core');
 // test keys are alternatives, only privacy secure keys are for main app account
 const KEY_ID = 'app_5a93ae6b5ed8ba0022389197';
 const SECRET = 'LtbsS1fo7ORUesnHUTvsJYZ7';
