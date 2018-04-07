@@ -37,8 +37,39 @@ app.post('/', (req,res)=>{
 		    res.status(200);
 		    res.end()
 		}).catch(err=>{
+					    console.log(err);
 			res.status(500);
 			res.end()
+		})
+	
+
+	});
+
+app.get('/', (req,res)=>{
+
+/*		smooch.appUsers.linkChannel('a40202931d3f6780bf418279', {
+    type: 'mailgun',
+    address: 'andrew.williams003@mymdc.net',
+    confirmation: {
+      type: 'immediate'
+    }
+		}).then((response) => {
+		    console.log(response);
+		    res.status(200);
+		    res.end()
+		}).catch(err=>{
+					    console.log(err);
+			res.status(500);
+			res.end()
+		})*/
+		smooch.appUsers.getChannels('a40202931d3f6780bf418279').then((response) => {
+		    console.log(response);
+		    res.status(200);
+			res.end()
+		}).catch(err=>{
+			res.status(500);
+			res.end()
+			console.log(err)
 		})
 	
 
