@@ -7,8 +7,8 @@ const cors = require('cors');
 const http = require('http');
 const SmoochCore = require('smooch-core');
 // test keys are alternatives, only privacy secure keys are for main app account
-const KEY_ID = 'app_5a93ae6b5ed8ba0022389197';
-const SECRET = 'LtbsS1fo7ORUesnHUTvsJYZ7';
+const KEY_ID = process.env.KEY_ID || 'app_5a93ae6b5ed8ba0022389197';
+const SECRET = process.env.SECRET || 'LtbsS1fo7ORUesnHUTvsJYZ7';
 const PORT = 8080;
 const smooch = new SmoochCore({
       keyId: KEY_ID,
@@ -63,8 +63,7 @@ app.get('/user',(req,res)=>{
 app.get('/getChannels', (req,res)=>{
 		smooch.appUsers.getChannels(req.query.id).then((response) => {
 		    console.log(response);
-		    res.status(200);
-			res.end()
+		    res.json(response)
 		}).catch(err=>{
 			res.status(500);
 			res.end()
@@ -90,12 +89,15 @@ app.post('/hook', (req,res)=>{
 		 res.end()
 	});
 app.post('/message', (req,res)=>{
+	const EMAILS = ['andrewjameswilliams.aw@gmail.com','andrewjameswilliams1995@gmail.com']
 		console.log(req.body);
 		console.log(req.body.appUser);
 		console.log('appUser is indeed= '+req.body.appUser._id);
 		smooch.appUsers.getChannels(req.body.appUser._id).then((response) => {
-		    if(!response.channels.reduce((sum,value)=>{return value.type==='mailgun'?true:sum;},false)&& req.body.appUser.email){
-		    		utilLink(req.body.appUser._id,req.body.appUser.email,(value)=>{
+			const mailgun = response.channels.reduce((sum,value)=>{return value.type==='mailgun'?true:sum;},false);
+			const frontendEmail = response.channels.filter((value)=>{return value.type==='frontendEmail'});
+		    if(!mailgun&&frontendEmail.length>0&&EMAILS.includes(frontendEmail[0].address)){
+		    		utilLink(req.body.appUser._id,frontendEmail[0].address,(value)=>{
 		    			console.log(value)
 		    		},(err)=>{
 		    			console.log(err)
@@ -107,6 +109,9 @@ app.post('/message', (req,res)=>{
 		res.status(200);
 		res.end()
 	});
+
+// if in the data dump we check for the email property to see if every user has an email property
+// check all messages for those who have a front end email and it doesn't mailgun channel, then link the mailgun channel
 
 const port = process.env.PORT || PORT;
 app.listen(port);
