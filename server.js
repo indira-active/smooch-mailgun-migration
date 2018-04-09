@@ -59,6 +59,12 @@ app.get('/user',(req,res)=>{
 	   res.json(response);
 	});
 })
+app.get('messages',(req,res)=>{
+		smooch.appUsers.getMessages(req.query.id).then((response) => {
+			console.log(response)
+	    res.json(response)
+	});
+})
 
 app.get('/getChannels', (req,res)=>{
 		smooch.appUsers.getChannels(req.query.id).then((response) => {
@@ -94,6 +100,7 @@ app.post('/message', (req,res)=>{
 		console.log(req.body.appUser);
 		console.log('appUser is indeed= '+req.body.appUser._id);
 		smooch.appUsers.getChannels(req.body.appUser._id).then((response) => {
+			console.log(response);
 			const mailgun = response.channels.reduce((sum,value)=>{return value.type==='mailgun'?true:sum;},false);
 			const frontendEmail = response.channels.filter((value)=>{return value.type==='frontendEmail'});
 		    if(!mailgun&&frontendEmail.length>0&&EMAILS.includes(frontendEmail[0].address)){
