@@ -45,8 +45,12 @@ app.post('/', (req,res)=>{
 
 	});
 
+
 app.get('/', (req,res)=>{
-		smooch.appUsers.getChannels('a40202931d3f6780bf418279').then((response) => {
+			res.json('welcome to indira')
+	});
+app.get('/getChannels', (req,res)=>{
+		smooch.appUsers.getChannels(req.query.id).then((response) => {
 		    console.log(response);
 		    res.status(200);
 			res.end()
@@ -76,10 +80,18 @@ app.get('/link',(req,res)=>{
 })
 
 app.post('/hook', (req,res)=>{
-		console.log(req.body)	
+		console.log(req.body);
+		console.log(req.body.appUser);
+		console.log('appUser is indeed= '+req.body.appUser._id);
+		 res.status(200);
+		 res.end()
 	});
 app.post('/message', (req,res)=>{
-		console.log(req.body)	
+		console.log(req.body);
+		console.log(req.body.appUser);
+		console.log('appUser is indeed= '+req.body.appUser._id);
+		 res.status(200);
+		    res.end()
 		/*smooch.appUsers.getChannels(id here).then((response) => {
 		    //Async code
 		});*/
