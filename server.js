@@ -24,25 +24,6 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(cors());
 
-
-const utilLink = (req,res)=>{
-	smooch.appUsers.linkChannel(req.query.id, {
-    type: 'mailgun',
-    address: req.query.email,
-    confirmation: {
-      type: 'immediate'
-    }
-		}).then((response) => {
-		    console.log(response);
-		    res.status(200);
-		    res.end()
-		}).catch(err=>{
-					    console.log(err);
-			res.status(500);
-			res.end()
-		})
-}
-
 const utilLink = (id,email,success,fail)=>{
 	return smooch.appUsers.linkChannel(id, {
     type: 'mailgun',
