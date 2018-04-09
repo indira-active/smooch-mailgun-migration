@@ -46,10 +46,21 @@ app.post('/', (req,res)=>{
 	});
 
 app.get('/', (req,res)=>{
+		smooch.appUsers.getChannels('a40202931d3f6780bf418279').then((response) => {
+		    console.log(response);
+		    res.status(200);
+			res.end()
+		}).catch(err=>{
+			res.status(500);
+			res.end()
+			console.log(err)
+		})
+	});
 
-/*		smooch.appUsers.linkChannel('a40202931d3f6780bf418279', {
+app.get('/link',(req,res)=>{
+			smooch.appUsers.linkChannel(req.query.id, {
     type: 'mailgun',
-    address: 'andrew.williams003@mymdc.net',
+    address: req.query.email,
     confirmation: {
       type: 'immediate'
     }
@@ -61,19 +72,8 @@ app.get('/', (req,res)=>{
 					    console.log(err);
 			res.status(500);
 			res.end()
-		})*/
-		smooch.appUsers.getChannels('a40202931d3f6780bf418279').then((response) => {
-		    console.log(response);
-		    res.status(200);
-			res.end()
-		}).catch(err=>{
-			res.status(500);
-			res.end()
-			console.log(err)
 		})
-	
-
-	});
+})
 
 app.post('/hook', (req,res)=>{
 		console.log(req.body)	
@@ -84,6 +84,8 @@ app.post('/message', (req,res)=>{
 		    //Async code
 		});*/
 	});
+//create a app:message hook for the alias email receiving an email
+//create an link:success hook as well as a link:failure hook
 
 const port = process.env.PORT || PORT;
 app.listen(port);
