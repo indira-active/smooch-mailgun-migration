@@ -24,11 +24,11 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(cors());
 
-app.post('/', (req,res)=>{
 
-		smooch.appUsers.linkChannel(req.body.id, {
+const utilLink = (req,res)=>{
+	smooch.appUsers.linkChannel(req.query.id, {
     type: 'mailgun',
-    mail: req.body.email,
+    address: req.query.email,
     confirmation: {
       type: 'immediate'
     }
@@ -41,9 +41,33 @@ app.post('/', (req,res)=>{
 			res.status(500);
 			res.end()
 		})
-	
+}
 
-	});
+const utilLink = (id,email,success,fail)=>{
+	return smooch.appUsers.linkChannel(id, {
+    type: 'mailgun',
+    address: email,
+    confirmation: {
+      type: 'immediate'
+    }
+		}).then((response) => {
+			if(typeof success === 'function'){
+		    success(response)
+		    return true
+			}else{
+				return true
+			}
+		}).catch(err=>{
+				if(typeof fail === 'function'){
+		    fail(err)
+		    return false
+			}else{
+				return false
+			}
+					
+		})
+}
+
 
 
 app.get('/', (req,res)=>{
@@ -61,27 +85,19 @@ app.get('/getChannels', (req,res)=>{
 		})
 	});
 
-app.get('/link',(req,res)=>{
-			smooch.appUsers.linkChannel(req.query.id, {
-    type: 'mailgun',
-    address: req.query.email,
-    confirmation: {
-      type: 'immediate'
-    }
-		}).then((response) => {
-		    console.log(response);
-		    res.status(200);
-		    res.end()
-		}).catch(err=>{
-					    console.log(err);
-			res.status(500);
-			res.end()
-		})
+app.get('/link',async (req,res)=>{
+		const response = await utilLink(req.query.id,req.query.email);
+		if(response){
+			res.json('success')
+		}else{
+			res.json('failure')
+		}
 })
 
 app.post('/hook', (req,res)=>{
-		console.log(req.body);
-		console.log(req.body.appUser);
+		console.log('req.body object===>',req.body);
+		console.log('------- end req.body object ------- ')
+		console.log('appUser object is to the right'+JSON.stringify(req.body.appUser));
 		console.log('appUser is indeed= '+req.body.appUser._id);
 		 res.status(200);
 		 res.end()
@@ -90,14 +106,20 @@ app.post('/message', (req,res)=>{
 		console.log(req.body);
 		console.log(req.body.appUser);
 		console.log('appUser is indeed= '+req.body.appUser._id);
-		 res.status(200);
-		    res.end()
-		/*smooch.appUsers.getChannels(id here).then((response) => {
-		    //Async code
-		});*/
+		smooch.appUsers.getChannels(req.body.appUser._id).then((response) => {
+		    if(!response.channels.reduce((sum,value)=>{return value.type==='mailgun'?true:sum;},false)&& req.body.appUser.email){
+		    		utilLink(req.body.appUser._id,req.body.appUser.email,(value)=>{
+		    			console.log(value)
+		    		},(err)=>{
+		    			console.log(err)
+		    		})
+		    }
+		}).catch(err=>{
+			console.log(err)
+		})
+		res.status(200);
+		res.end()
 	});
-//create a app:message hook for the alias email receiving an email
-//create an link:success hook as well as a link:failure hook
 
 const port = process.env.PORT || PORT;
 app.listen(port);
