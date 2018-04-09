@@ -30,7 +30,8 @@ const utilLink = (id,email,success,fail)=>{
     address: email,
     confirmation: {
       type: 'immediate'
-    }
+    },
+    primary:false
 		}).then((response) => {
 			if(typeof success === 'function'){
 		    success(response)
@@ -49,11 +50,16 @@ const utilLink = (id,email,success,fail)=>{
 		})
 }
 
-
-
 app.get('/', (req,res)=>{
 			res.json('welcome to indira')
 	});
+app.get('/user',(req,res)=>{
+		smooch.appUsers.get(req.query.email).then((response) => {
+		 console.log(response)
+	   res.json(response);
+	});
+})
+
 app.get('/getChannels', (req,res)=>{
 		smooch.appUsers.getChannels(req.query.id).then((response) => {
 		    console.log(response);
