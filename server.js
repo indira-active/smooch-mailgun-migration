@@ -87,6 +87,7 @@ app.get('/link',async (req,res)=>{
 })
 
 app.post('/hook', (req,res)=>{
+	console.log('testing');
 		console.log('req.body object===>',req.body);
 		console.log('------- end req.body object ------- ')
 		console.log('appUser object is to the right'+JSON.stringify(req.body.appUser));
