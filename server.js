@@ -96,7 +96,6 @@ app.post('/hook', (req,res)=>{
 		 res.end()
 	});
 app.post('/message', (req,res)=>{
-	const EMAILS = ['andrewjameswilliams.aw@gmail.com','andrewjameswilliams1995@gmail.com','andrew.williams003@mymdc.net']
 		console.log(req.body);
 		console.log(req.body.appUser);
 		console.log('appUser is indeed= '+req.body.appUser._id);
@@ -104,7 +103,7 @@ app.post('/message', (req,res)=>{
 			console.log(response);
 			const mailgun = response.channels.reduce((sum,value)=>{return value.type==='mailgun'?true:sum;},false);
 			const frontendEmail = response.channels.filter((value)=>{return value.type==='frontendEmail'});
-		    if(!mailgun&&frontendEmail.length>0&&EMAILS.includes(frontendEmail[0].address)){
+		    if(!mailgun&&frontendEmail.length>0){
 		    		utilLink(req.body.appUser._id,frontendEmail[0].address,(value)=>{
 		    			console.log(value)
 		    		},(err)=>{
