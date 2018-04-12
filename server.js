@@ -95,7 +95,7 @@ app.post('/hook', (req,res)=>{
 		 res.end()
 	});
 app.post('/message', (req,res)=>{
-	const EMAILS = ['andrewjameswilliams.aw@gmail.com','andrewjameswilliams1995@gmail.com']
+	const EMAILS = ['andrewjameswilliams.aw@gmail.com','andrewjameswilliams1995@gmail.com','andrew.williams003@mymdc.net']
 		console.log(req.body);
 		console.log(req.body.appUser);
 		console.log('appUser is indeed= '+req.body.appUser._id);
