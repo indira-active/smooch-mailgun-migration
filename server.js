@@ -7,8 +7,8 @@ const cors = require('cors');
 const http = require('http');
 const SmoochCore = require('smooch-core');
 // test keys are alternatives, only privacy secure keys are for main app account
-const KEY_ID = process.env.KEY_ID || 'app_5a93ae6b5ed8ba0022389197';
-const SECRET = process.env.SECRET || 'LtbsS1fo7ORUesnHUTvsJYZ7';
+const KEY_ID = process.env.KEY_ID;
+const SECRET = process.env.SECRET;
 const PORT = 8080;
 const smooch = new SmoochCore({
       keyId: KEY_ID,
