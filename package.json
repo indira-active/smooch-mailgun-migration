@@ -16,12 +16,12 @@
   },
   "devDependencies": {
     "assert": "1.4.1",
-    "codecov": "^3.0.0",
+    "codecov": "^3.0.1",
     "istanbul": "^0.4.5",
     "mocha": "5.0.3",
     "njwt": "0.4.0",
-    "nodeunit": "^0.11.2",
-    "nyc": "^11.4.1",
+    "nodeunit": "^0.11.3",
+    "nyc": "^11.7.2",
     "snyk": "^1.70.2"
   },
   "scripts": {
