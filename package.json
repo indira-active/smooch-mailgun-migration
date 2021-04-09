@@ -11,7 +11,7 @@
     "jsdoc": "^3.5.5",
     "jsonwebtoken": "^8.2.0",
     "morgan": "1.9.0",
-    "npm": "5.8.0",
+    "npm": "6.0.0",
     "smooch-core": "6.0.0"
   },
   "devDependencies": {
