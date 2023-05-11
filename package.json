@@ -22,7 +22,7 @@
     "njwt": "0.4.0",
     "nodeunit": "^0.11.2",
     "nyc": "^11.4.1",
-    "snyk": "^1.70.2"
+    "snyk": "^1.685.0"
   },
   "scripts": {
     "start": "node server.js"
